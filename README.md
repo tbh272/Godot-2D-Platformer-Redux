@@ -56,3 +56,5 @@ TODO
 Inspiration, code snippets, etc.
 * [Heartbeast](https://www.youtube.com/@uheartbeast)
 * [Godot Starter Kit](https:TODO)
+* 2D Assets www.Kenney.nl
+* Sound Fx Gdfxr (Sfxr plugin for godot)
