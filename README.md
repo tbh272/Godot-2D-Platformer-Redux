@@ -15,7 +15,17 @@ This project uses one of godot's starter kits, then using heartbeast RPG statema
 * Enemy
   * Simple hurtbox
   * simple animations (not same as player - will fix)
-  * no movement logic/AI 
+  * no movement logic/AI
+
+* Levels
+  * Using Tilemaps
+  * Different Layers
+  * not much else to say for this lol 
+
+## TODO
+[] Upload images for easy viewing
+[] Clean up Player script 
+[] Make/use custom assets
 
 ## Getting Started
 
