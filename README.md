@@ -5,6 +5,18 @@
 
 This project uses one of godot's starter kits, then using heartbeast RPG statemachine logic, and some of my own logic intwined. I plan on making this my own custom template for all to use, inconjuction with my own assets, but for now i will use Itch.io assets until further notice.
 
+## Features
+
+* Player
+  * Hardcoded statemachine
+  * Using animated Sprite with Animation player (easy for multiple sprite sheets while yet wanting a state machine)
+  * Simple Attack logic with hitbox (soon a hurtbox will be made)
+ 
+* Enemy
+  * Simple hurtbox
+  * simple animations (not same as player - will fix)
+  * no movement logic/AI 
+
 ## Getting Started
 
 ### Dependencies
