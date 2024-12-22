@@ -24,9 +24,16 @@ This project uses one of godot's starter kits, then using heartbeast RPG statema
 
 ## TODO
 - [ ] Upload images for easy viewing
-- [ ] Clean up Player script 
+- [ ] Clean up Player script
+     - [x] Refactor spaghetti code
+     - [x] "globalize" animations for easier use for debugging
+     - [ ] expand hurtbox/hitbox
+     - [ ] health system (work in progress)
 - [ ] Make/use custom assets
-
+     - [ ] player sprites
+     - [ ] enemy sprites
+     - [ ] world assets
+ 
 ## Getting Started
 
 ### Dependencies
@@ -46,10 +53,6 @@ This project uses one of godot's starter kits, then using heartbeast RPG statema
 
 * 0.1
     * Initial Release
-
-## License
-
-TODO
 
 ## Acknowledgments
 
