@@ -23,9 +23,9 @@ This project uses one of godot's starter kits, then using heartbeast RPG statema
   * not much else to say for this lol 
 
 ## TODO
-[ ] Upload images for easy viewing
-[ ] Clean up Player script 
-[ ] Make/use custom assets
+- [ ] Upload images for easy viewing
+- [ ] Clean up Player script 
+- [ ] Make/use custom assets
 
 ## Getting Started
 
