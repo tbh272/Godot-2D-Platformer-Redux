@@ -1,19 +1,19 @@
-extends CharacterBody2D
+class_name Player extends CharacterBody2D
 
 # --------- VARIABLES ---------- #
-
-@export_category("Movement") # You can tweak these changes according to your likings
+@export_category("Movement") 
 @export var move_speed : float = 300
 @export var jump_force : float = 600
-var gravity : float = 30
+var gravity : float = 45
+var input_vector
 
 var is_grounded : bool = false
 var attacking : bool = false
 
 @onready var player_sprite = $Sprite
 @onready var spawn_point = %SpawnPoint
-@onready var particle_trails = $ParticleTrails
-@onready var death_particles = $DeathParticles
+@onready var particle_trails = $"Particle Effects/ParticleTrails"
+@onready var death_particles = $"Particle Effects/DeathParticles"
 @onready var sword_collision = $Sword/CollisionShape2D
 @onready var anim_player = $AnimationPlayer
 
@@ -27,7 +27,7 @@ var is_dashing : bool = false
 
 
 # ---- PLAYER STATES ----
-enum player_states {MOVE, DASH,ATTACK}
+enum player_states {MOVE, DASH, SLIDE, ATTACK}
 var state = player_states.MOVE
 
 # --------- BUILT-IN FUNCTIONS ---------- #
@@ -41,7 +41,7 @@ func _process(delta: float) -> void:
 func _physics_process(delta):
 	match state:
 		player_states.MOVE:
-			move_state()
+			move_state(delta)
 		player_states.ATTACK:
 			attack_state()
 		player_states.DASH:
@@ -53,53 +53,58 @@ func _physics_process(delta):
 		if dash_timer <= 0.0:
 			stop_dash()
 	
-	player_animations()
+	#player_animations()
 	flip_player()
 	
 # --------- CUSTOM FUNCTIONS ---------- #
 
 # <-- Player Movement Code -->
-func move_state():
-	#print("State: Move") #debug
-	# Gravity
-	
+func move_state(_delta):
 	if !is_on_floor():
 		velocity.y += gravity
 		
 	# Move Player
-	var inputAxis = Input.get_axis("Left", "Right")
-	velocity = Vector2(inputAxis * move_speed, velocity.y)
+	input_vector = Input.get_axis("Left", "Right")
+	
+	anim_player.play("BaseAnimations/Move")
+	velocity = Vector2(input_vector * move_speed, velocity.y)
 	move_and_slide()
 	
+	if velocity == Vector2.ZERO:
+		anim_player.play("BaseAnimations/Idle")
+		
 	# --- CUSTOM INPUT ----
 	if Input.is_action_just_pressed("Jump"):
 		if is_on_floor():
 			jump()
 			
-	if Input.is_action_just_pressed("Attack"):
-		state = player_states.ATTACK
-		
-	if Input.is_action_just_pressed("Dash"):
-		if is_on_floor() and velocity.x != 0:
-			state = player_states.DASH
+	if state != player_states.DASH:
+		if Input.is_action_just_pressed("Attack"):
+			state = player_states.ATTACK
+	
+	if Input.is_action_just_pressed("Dash"): #change to slide on floor and dash in air
+		if is_on_floor():
+			state = player_states.DASH #slide
 		else:
-			print("cant dash while jumping or standing still")
-	
-	
+			state = player_states.DASH #Dash
+			
 func attack_state():
 	#print("State: Attack") #debug
 	attacking = true
+	if is_on_floor():
+		anim_player.play("BaseAnimations/Attack")
+	else:
+		anim_player.play("BaseAnimations/Air_Attack")
 
 func dash_state():
 	print("Dashing")
 	is_dashing = true
 	dash_timer = dash_duration
 	
-	dash_direction = Vector2.ZERO
-	var dash_axis = Input.get_axis("Left", "Right")
-	velocity = Vector2(dash_axis * dash_speed, velocity.y) 
+	anim_player.play("BaseAnimations/Dash")
+	
+	velocity = Vector2(input_vector * dash_speed, 0) 
 	move_and_slide()
-
 
 func stop_dash():
 	print("Stop dashing")
@@ -110,29 +115,6 @@ func stop_dash():
 # Player jump
 func jump():
 	velocity.y = -jump_force
-
-# Handle Player Animations
-func player_animations():
-	particle_trails.emitting = false
-	match state:
-		player_states.MOVE:
-			if is_on_floor() and abs(velocity.x) > 0:
-				anim_player.play("Move")
-			else:
-				anim_player.play("Idle")
-				
-				#if velocity.y < 0 and !is_on_floor():
-		player_states.ATTACK:
-			if is_on_floor():
-				anim_player.play("Attack")
-			else:
-				pass
-		player_states.DASH:
-			if is_on_floor():
-				anim_player.play("Dash")
-			else:
-				pass
-			
 
 # Flip player sprite based on X velocity
 func flip_player():
@@ -152,9 +134,9 @@ func respawn():
 func _on_collision_body_entered(_body):
 	if _body.is_in_group("Traps"):
 		death_particles.emitting = true
+		velocity = Vector2.ZERO
 		await GameManager.frame_freeze(0.05, 0.85)
 		respawn()
-
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name == "Attack" or "Dash":

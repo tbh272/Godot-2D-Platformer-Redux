@@ -10,11 +10,11 @@ config_version=5
 
 [application]
 
-config/name="PlatformerTesterer"
-config/version="0.0.1"
-config/tags=PackedStringArray()
+config/name="PlatformerRedux"
+config/version="0.0.3"
 run/main_scene="res://Scenes/Levels/Level_01.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
+config/icon="res://icon.svg"
 
 [autoload]
 
@@ -78,4 +78,3 @@ Dash={
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
-environment/defaults/default_clear_color=Color(0.105469, 0.457031, 0.730469, 1)

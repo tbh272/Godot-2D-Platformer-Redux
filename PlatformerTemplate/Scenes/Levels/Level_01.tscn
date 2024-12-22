@@ -94,5 +94,13 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("6_66mfc")
 
+[node name="DebugTotal" type="TextEdit" parent="UserInterface/GameUI"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.124
+anchor_bottom = 0.069
+offset_right = 0.151993
+offset_bottom = 0.287994
+
 [node name="Enemy" parent="." instance=ExtResource("9_idvl0")]
-position = Vector2(970, 380)
+position = Vector2(360, 396)

@@ -5,8 +5,8 @@ extends Node2D
 var score : int = 0
 
 # Adds 1 to score variable
-func add_score():
-	score += 1
+func add_score(value : int):
+	score += value
 
 # Loads next level
 func load_next_level(next_scene : PackedScene):
