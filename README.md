@@ -32,5 +32,5 @@ TODO
 ## Acknowledgments
 
 Inspiration, code snippets, etc.
-* [Heartbeast](https://youtube.com/heartbeast)
+* [Heartbeast](https://www.youtube.com/@uheartbeast)
 * [Godot Starter Kit](https:TODO)
