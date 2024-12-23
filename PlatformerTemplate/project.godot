@@ -20,6 +20,7 @@ config/icon="res://icon.svg"
 
 GameManager="*res://Scripts/GameManager.gd"
 SceneTransition="*res://Scenes/Managers/SceneTransition.tscn"
+Math="*res://Scripts/Math.gd"
 
 [display]
 

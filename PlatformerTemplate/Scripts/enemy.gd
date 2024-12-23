@@ -10,6 +10,11 @@ var states = enemy_states.MOVE
 
 var dead = false
 
+var hp : int = 100 : set = _on_hp_set
+var max_hp : int = 100
+var defense : int = 2
+var weapon_damage : int = 15
+
 func _ready() -> void:
 	states = enemy_states.MOVE
 
@@ -51,11 +56,14 @@ func play_animation():
 # ---- COLLISIONS WITH PLAYER ----
 
 func _on_hitbox_area_entered(area: Area2D) -> void:
-	if area.name == "Sword":
-		dead = true
-		if dead:
-			print("dead")
-			queue_free()
-			GameManager.add_score(5)
-		else:
-			print("Not dead")
+	var base_damage = weapon_damage
+	var damage_taken = Math.calculate_damage(base_damage, weapon_damage, defense)
+	hp -= damage_taken
+	print(hp)
+	if hp <= 0:
+		print("Dead")
+		queue_free()
+			
+func _on_hp_set(new_value : int):
+	hp = new_value
+	#progress bar update
