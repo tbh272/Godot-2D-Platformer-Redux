@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://cjanwm3sy2x37"]
+[gd_scene load_steps=14 format=3 uid="uid://cjanwm3sy2x37"]
 
 [ext_resource type="PackedScene" uid="uid://cyti38f0lagf2" path="res://Scenes/Prefabs/LevelFinishDoor.tscn" id="1_oqkjg"]
 [ext_resource type="PackedScene" uid="uid://bjb3dx2x4bocm" path="res://Scenes/Levels/Level_02.tscn" id="2_0ac5u"]
@@ -8,6 +8,14 @@
 [ext_resource type="Texture2D" uid="uid://jaegp53ccc7w" path="res://Assets/Spritesheet/platformPack_tilesheet.png" id="5_wqbaa"]
 [ext_resource type="Script" path="res://Scripts/GameUI.gd" id="6_66mfc"]
 [ext_resource type="PackedScene" uid="uid://ce468i3wfw3r" path="res://Scenes/Prefabs/enemy.tscn" id="9_idvl0"]
+
+[sub_resource type="Environment" id="Environment_3lmp4"]
+glow_enabled = true
+glow_levels/1 = 1.0
+glow_levels/2 = 1.0
+glow_intensity = 0.3
+glow_hdr_threshold = 1.5
+glow_hdr_luminance_cap = 2.0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gs0qk"]
 texture = ExtResource("5_wqbaa")
@@ -44,6 +52,9 @@ sources/0 = SubResource("TileSetAtlasSource_rndpx")
 
 [node name="Level_01" type="Node2D"]
 
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_3lmp4")
+
 [node name="LevelFinishDoor" parent="." instance=ExtResource("1_oqkjg")]
 z_index = 1
 position = Vector2(1304, 400)
@@ -69,7 +80,7 @@ position = Vector2(844, 408)
 [node name="Ground" type="TileMap" parent="Level" groups=["Ground"]]
 tile_set = SubResource("TileSet_ywwrl")
 format = 2
-layer_0/tile_data = PackedInt32Array(458752, 0, 0, 458753, 0, 0, 458754, 0, 0, 458755, 0, 0, 458756, 0, 0, 524288, 196608, 0, 589824, 196608, 0, 589825, 196608, 0, 589826, 196608, 0, 589827, 196608, 0, 589828, 196608, 0, 655364, 196608, 0, 655363, 196608, 0, 655362, 196608, 0, 655361, 196608, 0, 655360, 196608, 0, 524289, 196608, 0, 524290, 196608, 0, 524291, 196608, 0, 524292, 196608, 0, 458765, 0, 0, 524301, 196608, 0, 589837, 196608, 0, 655373, 196608, 0, 458766, 0, 0, 524302, 196608, 0, 589838, 196608, 0, 655374, 196608, 0, 458767, 0, 0, 524303, 196608, 0, 589839, 196608, 0, 655375, 196608, 0, 458768, 0, 0, 524304, 196608, 0, 589840, 196608, 0, 655376, 196608, 0, 458769, 0, 0, 524305, 196608, 0, 589841, 196608, 0, 655377, 196608, 0, 458770, 0, 0, 524306, 196608, 0, 589842, 196608, 0, 655378, 196608, 0, 458771, 0, 0, 524307, 196608, 0, 589843, 196608, 0, 655379, 196608, 0, 458772, 0, 0, 524308, 196608, 0, 589844, 196608, 0, 655380, 196608, 0, 458773, 0, 0, 524309, 196608, 0, 589845, 196608, 0, 655381, 196608, 0, 655370, 196608, 0, 655371, 196608, 0, 655372, 196608, 0, 655365, 196608, 0, 655366, 196608, 0, 655367, 196608, 0, 655368, 196608, 0, 655369, 196608, 0, 458757, 0, 2, 458764, 0, 2, 720895, 196608, 0, 655359, 196608, 0, 589823, 196608, 0, 524287, 196608, 0, 458751, 196608, 0, 393215, 196608, 0, 327679, 196608, 0, 262143, 196608, 0, 196607, 196608, 0, 131071, 196608, 0, 65535, 196608, 0, 458758, 0, 2, 458759, 0, 2, 458763, 0, 2, 458762, 0, 2)
+layer_0/tile_data = PackedInt32Array(458752, 0, 0, 458753, 0, 0, 458754, 0, 0, 458755, 0, 0, 458756, 0, 0, 524288, 196608, 0, 589824, 196608, 0, 589825, 196608, 0, 589826, 196608, 0, 589827, 196608, 0, 589828, 196608, 0, 655364, 196608, 0, 655363, 196608, 0, 655362, 196608, 0, 655361, 196608, 0, 655360, 196608, 0, 524289, 196608, 0, 524290, 196608, 0, 524291, 196608, 0, 524292, 196608, 0, 458765, 0, 0, 524301, 196608, 0, 589837, 196608, 0, 655373, 196608, 0, 458766, 196608, 0, 524302, 196608, 0, 589838, 196608, 0, 655374, 196608, 0, 458767, 0, 0, 524303, 196608, 0, 589839, 196608, 0, 655375, 196608, 0, 458768, 0, 0, 524304, 196608, 0, 589840, 196608, 0, 655376, 196608, 0, 458769, 0, 0, 524305, 196608, 0, 589841, 196608, 0, 655377, 196608, 0, 458770, 0, 0, 524306, 196608, 0, 589842, 196608, 0, 655378, 196608, 0, 458771, 0, 0, 524307, 196608, 0, 589843, 196608, 0, 655379, 196608, 0, 458772, 0, 0, 524308, 196608, 0, 589844, 196608, 0, 655380, 196608, 0, 458773, 0, 0, 524309, 196608, 0, 589845, 196608, 0, 655381, 196608, 0, 655370, 196608, 0, 655371, 196608, 0, 655372, 196608, 0, 655365, 196608, 0, 655366, 196608, 0, 655367, 196608, 0, 655368, 196608, 0, 655369, 196608, 0, 458757, 0, 2, 458764, 0, 2, 720895, 196608, 0, 655359, 196608, 0, 589823, 196608, 0, 524287, 196608, 0, 458751, 196608, 0, 393215, 196608, 0, 327679, 196608, 0, 262143, 196608, 0, 196607, 196608, 0, 131071, 196608, 0, 65535, 196608, 0, 458758, 0, 2, 458759, 0, 2, 458763, 0, 2, 458762, 0, 2, 393230, 196608, 0, 327694, 196608, 0, 262158, 196608, 0, 196622, 0, 0)
 
 [node name="Traps" type="TileMap" parent="Level" groups=["Traps"]]
 tile_set = SubResource("TileSet_2fcbi")
@@ -94,13 +105,27 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("6_66mfc")
 
-[node name="DebugTotal" type="TextEdit" parent="UserInterface/GameUI"]
+[node name="Debug" type="Label" parent="UserInterface/GameUI"]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 0.124
 anchor_bottom = 0.069
-offset_right = 0.151993
+offset_left = 1.0
+offset_right = 1.15199
 offset_bottom = 0.287994
+text = "Debug"
+vertical_alignment = 1
+
+[node name="DebugTotal" type="Label" parent="UserInterface/GameUI"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.124
+anchor_bottom = 0.069
+offset_top = 30.0
+offset_right = 0.151993
+offset_bottom = 30.288
+text = "000"
+vertical_alignment = 1
 
 [node name="Enemy" parent="." instance=ExtResource("9_idvl0")]
 position = Vector2(360, 396)

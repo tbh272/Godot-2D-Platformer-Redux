@@ -1,15 +1,27 @@
 class_name Player extends CharacterBody2D
 
-# --------- VARIABLES ---------- #
-@export_category("Movement") 
-@export var move_speed : float = 300
-@export var jump_force : float = 600
-var gravity : float = 45
-var input_vector
+# --------- PLAYER VARIABLES ---------- #
+const SPEED = 350.0 # Base horizontal movement speed
+const ACCELERATION = 1200.0 # Base acceleration
+const FRICTION = 1400.0 # Base friction
+const GRAVITY = 2000.0 # Gravity when moving upwards
+const FALL_GRAVITY = 3000.0 # Gravity when falling downwards
+const FAST_FALL_GRAVITY = 5000.0 # Gravity while holding "fast_fall"
+const WALL_GRAVITY = 25.0 # Gravity while sliding on a wall
+const JUMP_VELOCITY = -700.0 # Maximum jump strength
+const WALL_JUMP_VELOCITY = -700.0 # Maximum wall jump strength
+const WALL_JUMP_PUSHBACK = 300.0 # Horizontal push strength off walls
+const INPUT_BUFFER_PATIENCE = 0.1 # Input queue patience time
+const COYOTE_TIME = 0.08 # Coyote patience time
+
+var input_buffer : Timer # Reference to the input queue timer
+var coyote_timer : Timer # Reference to the coyote timer
+var coyote_jump_available := true
 
 var is_grounded : bool = false
 var attacking : bool = false
 
+@export_category("Object References")
 @onready var player_sprite = $Sprite
 @onready var spawn_point = %SpawnPoint
 @onready var particle_trails = $"Particle Effects/ParticleTrails"
@@ -17,104 +29,86 @@ var attacking : bool = false
 @onready var sword_collision = $Sword/CollisionShape2D
 @onready var anim_player = $AnimationPlayer
 
-@export_category("Dash")
-@onready var dash_timer = 0.0
-@export var dash_speed = 500
-@export var dash_duration = 0.2
-@onready var dash_direction = Vector2.ZERO
-@export var dash_cooldown = 0.8
-var is_dashing : bool = false
-
-
 # ---- PLAYER STATES ----
-enum player_states {MOVE, DASH, SLIDE, ATTACK}
-var state = player_states.MOVE
+enum {MOVE, ATTACK}
+var state = MOVE
 
 # --------- BUILT-IN FUNCTIONS ---------- #
 func _ready() -> void:
 	sword_collision.disabled = true
+	# Set up input buffer timer
+	input_buffer = Timer.new()
+	input_buffer.wait_time = INPUT_BUFFER_PATIENCE
+	input_buffer.one_shot = true
+	add_child(input_buffer)
 
-func _process(delta: float) -> void:
-	if dash_timer > 0:
-		dash_timer -= delta
+	# Set up coyote timer
+	coyote_timer = Timer.new()
+	coyote_timer.wait_time = COYOTE_TIME
+	coyote_timer.one_shot = true
+	add_child(coyote_timer)
+	coyote_timer.timeout.connect(coyote_timeout)
 
 func _physics_process(delta):
 	match state:
-		player_states.MOVE:
+		MOVE:
 			move_state(delta)
-		player_states.ATTACK:
+		ATTACK:
 			attack_state()
-		player_states.DASH:
-			dash_state()
 	
-	#dashing logic
-	if is_dashing:
-		dash_timer -= delta
-		if dash_timer <= 0.0:
-			stop_dash()
-	
-	#player_animations()
+	player_animations()
 	flip_player()
 	
 # --------- CUSTOM FUNCTIONS ---------- #
 
 # <-- Player Movement Code -->
 func move_state(_delta):
-	if !is_on_floor():
-		velocity.y += gravity
-		
-	# Move Player
-	input_vector = Input.get_axis("Left", "Right")
+	# Get inputs
+	var horizontal_input := Input.get_axis("Left", "Right")
+	var jump_attempted := Input.is_action_just_pressed("Jump")
+
+	# Add the gravity and handle jumping
+	if jump_attempted or input_buffer.time_left > 0:
+		if coyote_jump_available: # If jumping on the ground
+			velocity.y = JUMP_VELOCITY
+			coyote_jump_available = false
+		elif is_on_wall() and horizontal_input != 0: # If jumping off a wall
+			velocity.y = WALL_JUMP_VELOCITY
+			velocity.x = WALL_JUMP_PUSHBACK * -sign(horizontal_input)
+		elif jump_attempted: # Queue input buffer if jump was attempted
+			input_buffer.start()
+
+	# Shorten jump if jump key is released
+	if Input.is_action_just_released("Jump") and velocity.y < 0:
+		velocity.y = JUMP_VELOCITY / 4
+
+	# Apply gravity and reset coyote jump
+	if is_on_floor():
+		coyote_jump_available = true
+		coyote_timer.stop()
+	else:
+		if coyote_jump_available:
+			if coyote_timer.is_stopped():
+				coyote_timer.start()
+		velocity.y += get_custom_gravity(horizontal_input) * _delta
+
+	# HYandle horizontal motion and friction
+	var floor_damping := 1.0 if is_on_floor() else 0.2 # Set floor damping, friction is less when in air
+	var dash_multiplier := 2 if Input.is_action_pressed("Dash") else 1
+	if horizontal_input:
+		velocity.x = move_toward(velocity.x, horizontal_input * SPEED * dash_multiplier, ACCELERATION * _delta)
+	else:
+		velocity.x = move_toward(velocity.x, 0, (FRICTION * _delta) * floor_damping)
 	
-	anim_player.play("BaseAnimations/Move")
-	velocity = Vector2(input_vector * move_speed, velocity.y)
+	if Input.is_action_pressed("Attack"):
+		state = ATTACK
+	
+	# Apply velocity
 	move_and_slide()
-	
-	if velocity == Vector2.ZERO:
-		anim_player.play("BaseAnimations/Idle")
-		
-	# --- CUSTOM INPUT ----
-	if Input.is_action_just_pressed("Jump"):
-		if is_on_floor():
-			jump()
-			
-	if state != player_states.DASH:
-		if Input.is_action_just_pressed("Attack"):
-			state = player_states.ATTACK
-	
-	if Input.is_action_just_pressed("Dash"): #change to slide on floor and dash in air
-		if is_on_floor():
-			state = player_states.DASH #slide
-		else:
-			state = player_states.DASH #Dash
-			
+
 func attack_state():
 	#print("State: Attack") #debug
 	attacking = true
-	if is_on_floor():
-		anim_player.play("BaseAnimations/Attack")
-	else:
-		anim_player.play("BaseAnimations/Air_Attack")
-
-func dash_state():
-	print("Dashing")
-	is_dashing = true
-	dash_timer = dash_duration
-	
-	anim_player.play("BaseAnimations/Dash")
-	
-	velocity = Vector2(input_vector * dash_speed, 0) 
-	move_and_slide()
-
-func stop_dash():
-	print("Stop dashing")
-	is_dashing = false
-	dash_timer = dash_cooldown
-	velocity = Vector2.ZERO
-
-# Player jump
-func jump():
-	velocity.y = -jump_force
 
 # Flip player sprite based on X velocity
 func flip_player():
@@ -125,9 +119,30 @@ func flip_player():
 		player_sprite.flip_h = false
 		sword_collision.position = Vector2(42, 15)
 
+func player_animations():
+	match state:
+		MOVE:
+			if velocity.x > 0 or velocity.x < 0:
+				anim_player.play("BaseAnimations/Move")
+			else:
+				anim_player.play("BaseAnimations/Idle")
+		ATTACK:
+			if is_on_floor():
+				anim_player.play("BaseAnimations/Attack")
+			else:
+				anim_player.play("BaseAnimations/Air_Attack")
+
 # Tween Animations
 func respawn():
 	global_position = spawn_point.global_position
+	
+## Returns the gravity based on the state of the player
+func get_custom_gravity(input_dir : float = 0) -> float:
+	if Input.is_action_pressed("Fast_Fall"):
+		return FAST_FALL_GRAVITY
+	if is_on_wall_only() and velocity.y > 0 and input_dir != 0:
+		return WALL_GRAVITY
+	return GRAVITY if velocity.y < 0 else FALL_GRAVITY
 
 # --------- SIGNALS ---------- #
 # Reset the player's position to the current level spawn point if collided with any trap
@@ -140,5 +155,9 @@ func _on_collision_body_entered(_body):
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name == "Attack" or "Dash":
-		state = player_states.MOVE
+		state = MOVE
 		attacking = false
+
+## Reset coyote jump
+func coyote_timeout() -> void:
+	coyote_jump_available = false

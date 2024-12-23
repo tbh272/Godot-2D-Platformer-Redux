@@ -1,11 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://bjb3dx2x4bocm"]
+[gd_scene load_steps=11 format=3 uid="uid://bjb3dx2x4bocm"]
 
 [ext_resource type="PackedScene" uid="uid://w7m6tehvvy3g" path="res://Scenes/Prefabs/player.tscn" id="2_lpo2y"]
 [ext_resource type="PackedScene" uid="uid://bfmh3fm2de78o" path="res://Scenes/Prefabs/Coin.tscn" id="3_nht2m"]
 [ext_resource type="Script" path="res://Scripts/GameManager.gd" id="4_ndpt4"]
 [ext_resource type="Texture2D" uid="uid://jaegp53ccc7w" path="res://Assets/Spritesheet/platformPack_tilesheet.png" id="5_8107p"]
 [ext_resource type="Script" path="res://Scripts/GameUI.gd" id="6_um0jo"]
-[ext_resource type="Texture2D" uid="uid://clreg520jah1j" path="res://Assets/platformPack_item008.png" id="7_ns8o6"]
 [ext_resource type="FontFile" uid="uid://qgc4vi5osk7v" path="res://Assets/Fonts/Star Choco.ttf" id="8_doswy"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gs0qk"]
@@ -105,33 +104,24 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("6_um0jo")
 
-[node name="Score" type="Control" parent="UserInterface/GameUI"]
-unique_name_in_owner = true
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="Debug" type="Label" parent="UserInterface/GameUI"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.124
+anchor_bottom = 0.069
+offset_left = 1.0
+offset_right = 1.15199
+offset_bottom = 0.287994
+text = "Debug"
+vertical_alignment = 1
 
-[node name="ScoreTexture" type="TextureRect" parent="UserInterface/GameUI/Score"]
-unique_name_in_owner = true
-layout_mode = 0
-offset_left = 16.0
-offset_top = 16.0
-offset_right = 116.0
-offset_bottom = 116.0
-texture = ExtResource("7_ns8o6")
-stretch_mode = 4
-
-[node name="ScoreLabel" type="Label" parent="UserInterface/GameUI/Score"]
-unique_name_in_owner = true
-layout_mode = 0
-offset_left = 104.0
-offset_top = 42.0
-offset_right = 148.0
-offset_bottom = 84.0
-theme_override_colors/font_color = Color(0.910156, 0.730469, 0, 1)
-theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
-theme_override_constants/outline_size = 10
-theme_override_fonts/font = ExtResource("8_doswy")
-theme_override_font_sizes/font_size = 32
-text = "x 3"
+[node name="DebugTotal" type="Label" parent="UserInterface/GameUI"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.124
+anchor_bottom = 0.069
+offset_top = 30.0
+offset_right = 0.151993
+offset_bottom = 30.288
+text = "000"
+vertical_alignment = 1

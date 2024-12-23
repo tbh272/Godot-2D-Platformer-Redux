@@ -7,6 +7,7 @@
 size = Vector2(66, 80)
 
 [node name="LevelFinishDoor" type="Area2D"]
+collision_mask = 3
 script = ExtResource("1_bto8y")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
