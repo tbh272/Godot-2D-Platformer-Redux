@@ -53,6 +53,9 @@ This project uses one of godot's starter kits, then using heartbeast RPG statema
 
 * 0.1
     * Initial Release
+* 0.3
+    * rework of player scripts, now has proper acceleration, coyote jump timing
+    * rework animation system so that now animations look cleaner in code
 
 ## Acknowledgments
 
