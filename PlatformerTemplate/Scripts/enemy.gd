@@ -35,17 +35,13 @@ func move_state():
 	move_and_slide()
 
 func play_animation():
-	#particle_trails.emitting = false
 	match states:
 		MOVE:
-			if is_on_floor() and abs(velocity.x) > 0:
-				#anim_player.play("BaseAnimations/Move")
-				pass
-			else:
-				#anim_player.play("BaseAnimations/Idle")
-				pass
-				
-				#if velocity.y < 0 and !is_on_floor():
+			pass
+		DEATH:
+			pass
+		ATTACK:
+			pass
 
 # ---- COLLISIONS WITH PLAYER ----
 
@@ -58,7 +54,7 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 	if Enemy_health.health <= 0:
 		print("Dead")
 		GameManager.add_score(5)
-		queue_free()
+		queue_free() #todo add a death anim
 
 func _on_health_health_changed(diff: int) -> void:
 	$ProgressBar.value = Enemy_health.health

@@ -1,5 +1,3 @@
-# This script is an autoload, that can be accessed from any other script!
-
 extends Node2D
 
 var score : int = 0
@@ -12,6 +10,7 @@ func add_score(value : int):
 func load_next_level(next_scene : PackedScene):
 	get_tree().change_scene_to_packed(next_scene)
 	
+#hit stop
 func frame_freeze(timescale, duration):
 	Engine.time_scale = timescale
 	await(get_tree().create_timer(duration * timescale).timeout)

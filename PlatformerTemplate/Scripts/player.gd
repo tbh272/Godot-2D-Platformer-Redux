@@ -133,7 +133,7 @@ func flip_player():
 func player_animations():
 	match state:
 		MOVE:
-			if velocity.x > 0 or velocity.x < 0:
+			if velocity.x != 0:
 				anim_player.play("BaseAnimations/Move")
 			else:
 				anim_player.play("BaseAnimations/Idle")
