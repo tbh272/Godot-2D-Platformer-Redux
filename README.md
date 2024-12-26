@@ -7,17 +7,22 @@ This project uses one of godot's starter kits, then using heartbeast RPG statema
 
 ## Features
 
-#Player
-  * Hardcoded statemachine
+## Player
+* Animations/Spritesheets
   * Using AnimtedSprite2D w/ Animation player for multiple spritesheet workflows
+* Attack System
   * Ground/Air Attack system (verrry basic for right now)
+  * Functions to implement when attack is ended
+* State Machine
+  * Hardcoded statemachine
+  * Using the spritesheet workflow, makes it easier to implement any action
  
-* Enemy
+## Enemy
   * Simple hurtbox
   * simple animations (not same as player - will fix)
   * no movement logic/AI
 
-* Levels
+ ## Levels
   * Using Tilemaps
   * Different Layers
   * not much else to say for this lol 
@@ -28,7 +33,7 @@ This project uses one of godot's starter kits, then using heartbeast RPG statema
      - [x] Refactor spaghetti code
      - [x] "globalize" animations for easier use for debugging
      - [ ] expand hurtbox/hitbox
-     - [ ] health system (work in progress)
+     - [x] health system (Basic system implemented)
 - [ ] Make/use custom assets
      - [ ] player sprites
      - [ ] enemy sprites
@@ -53,9 +58,12 @@ This project uses one of godot's starter kits, then using heartbeast RPG statema
 
 * 0.1
     * Initial Release
-* 0.3
+* 0.2
     * rework of player scripts, now has proper acceleration, coyote jump timing
     * rework animation system so that now animations look cleaner in code
+* 0.3
+    * rework player with coyote timing, dash proper implementation, etc
+    * health component system with enemies and damage calculation based on factors such as armor/defense
 
 ## Acknowledgments
 
