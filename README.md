@@ -7,10 +7,10 @@ This project uses one of godot's starter kits, then using heartbeast RPG statema
 
 ## Features
 
-* Player
+#Player
   * Hardcoded statemachine
-  * Using animated Sprite with Animation player (easy for multiple sprite sheets while yet wanting a state machine)
-  * Simple Attack logic with hitbox (soon a hurtbox will be made)
+  * Using AnimtedSprite2D w/ Animation player for multiple spritesheet workflows
+  * Ground/Air Attack system (verrry basic for right now)
  
 * Enemy
   * Simple hurtbox
