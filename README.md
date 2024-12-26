@@ -52,7 +52,7 @@ This project uses one of godot's starter kits, then using heartbeast RPG statema
 
 ## Authors
 
-* Myself (Tyler - Dax272)
+* Myself (Tyler aka Dax272)
 
 ## Version History
 
@@ -70,5 +70,4 @@ This project uses one of godot's starter kits, then using heartbeast RPG statema
 Inspiration, code snippets, etc.
 * [Heartbeast](https://www.youtube.com/@uheartbeast)
 * [Godot Starter Kit](https:TODO)
-* 2D Assets www.Kenney.nl
-* Sound Fx Gdfxr (Sfxr plugin for godot)
+* [2D Assets](www.Kenney.nl)
