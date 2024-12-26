@@ -7,7 +7,7 @@ This project uses one of godot's starter kits, then using heartbeast RPG statema
 
 ## Features
 
-## Player
+### Player
 * Animations/Spritesheets
   * Using AnimtedSprite2D w/ Animation player for multiple spritesheet workflows
 * Attack System
@@ -17,12 +17,12 @@ This project uses one of godot's starter kits, then using heartbeast RPG statema
   * Hardcoded statemachine
   * Using the spritesheet workflow, makes it easier to implement any action
  
-## Enemy
+### Enemy
   * Simple hurtbox
   * simple animations (not same as player - will fix)
   * no movement logic/AI
 
- ## Levels
+ ### Levels
   * Using Tilemaps
   * Different Layers
   * not much else to say for this lol 
