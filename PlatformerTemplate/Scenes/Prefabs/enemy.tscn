@@ -1,4 +1,4 @@
-[gd_scene load_steps=67 format=3 uid="uid://ce468i3wfw3r"]
+[gd_scene load_steps=68 format=3 uid="uid://ce468i3wfw3r"]
 
 [ext_resource type="Texture2D" uid="uid://cgmecn8g2t3hd" path="res://Assets/Spritesheet/Player/player new jump 48x48.png" id="1_hj8b4"]
 [ext_resource type="Script" path="res://Scripts/enemy.gd" id="1_mhae1"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://c7xuvi7wgsqcr" path="res://Assets/Spritesheet/Player/player sword atk 64x64.png" id="3_pt84k"]
 [ext_resource type="Texture2D" uid="uid://cjrov0gm8mn8r" path="res://Assets/Spritesheet/Player/player katana attack-sheathe 80x64.png" id="4_5cflr"]
 [ext_resource type="Texture2D" uid="uid://dtgekwjyn2s85" path="res://Assets/Spritesheet/Player/dash.png" id="5_c4o57"]
+[ext_resource type="Script" path="res://Scripts/health.gd" id="9_bcwsw"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2ad7k"]
 atlas = ExtResource("2_agwh8")
@@ -468,4 +469,18 @@ collision_mask = 12
 position = Vector2(1.5, 14)
 shape = SubResource("RectangleShape2D_gujpr")
 
+[node name="Health" type="Node" parent="."]
+script = ExtResource("9_bcwsw")
+max_health = 100
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+modulate = Color(1, 0, 0, 1)
+offset_left = -48.0
+offset_top = -35.0
+offset_right = 47.0
+offset_bottom = -27.0
+value = 100.0
+show_percentage = false
+
 [connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
+[connection signal="health_changed" from="Health" to="." method="_on_health_health_changed"]

@@ -49,7 +49,7 @@ position = Vector2(150, 318)
 [node name="Coins" type="Node2D" parent="."]
 
 [node name="Coin" parent="Coins" instance=ExtResource("3_nht2m")]
-position = Vector2(696, 416)
+position = Vector2(696, 354)
 
 [node name="Coin2" parent="Coins" instance=ExtResource("3_nht2m")]
 position = Vector2(864, 353)
@@ -88,9 +88,8 @@ theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
 theme_override_constants/outline_size = 10
 theme_override_fonts/font = ExtResource("8_doswy")
 theme_override_font_sizes/font_size = 32
-text = "2D PLATFORMER
-STARTER KIT BY
-G2P STUDIOS"
+text = "2D Platformer Redux
+by: Dax272"
 horizontal_alignment = 1
 
 [node name="UserInterface" type="CanvasLayer" parent="."]

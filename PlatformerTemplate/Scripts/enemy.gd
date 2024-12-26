@@ -4,46 +4,40 @@ extends CharacterBody2D
 var gravity : float = 30
 @onready var sprite = $Sprite
 @onready var anim_player = $AnimationPlayer
+@onready var Enemy_health = $Health
 
-enum enemy_states {MOVE, DEATH, ATTACK}
-var states = enemy_states.MOVE
+enum {MOVE, DEATH, ATTACK}
+var states = MOVE
 
 var dead = false
 
-var hp : int = 100 : set = _on_hp_set
-var max_hp : int = 100
-var defense : int = 2
-var weapon_damage : int = 15
+var weapon_damage : int = 25
 
 func _ready() -> void:
-	states = enemy_states.MOVE
+	states = MOVE
 
 func _physics_process(_delta: float) -> void:
 	match states:
-		enemy_states.MOVE:
+		MOVE:
 			move_state()
-		enemy_states.DEATH:
+		DEATH:
 			pass
-		enemy_states.ATTACK:
+		ATTACK:
 			pass
 	
 	play_animation()
-
-func move_player():
-	move_and_slide()
 
 func move_state():
 	# Gravity
 	if !is_on_floor():
 		velocity.y += gravity
 		
-	move_player()
-
+	move_and_slide()
 
 func play_animation():
 	#particle_trails.emitting = false
 	match states:
-		enemy_states.MOVE:
+		MOVE:
 			if is_on_floor() and abs(velocity.x) > 0:
 				#anim_player.play("BaseAnimations/Move")
 				pass
@@ -57,13 +51,14 @@ func play_animation():
 
 func _on_hitbox_area_entered(area: Area2D) -> void:
 	var base_damage = weapon_damage
-	var damage_taken = Math.calculate_damage(base_damage, weapon_damage, defense)
-	hp -= damage_taken
-	print(hp)
-	if hp <= 0:
+	var damage_taken = Math.calculate_damage(base_damage, weapon_damage, Enemy_health.defense)
+	Enemy_health.health -= damage_taken
+	#health = Enemy_health.health
+	print(Enemy_health.health)
+	if Enemy_health.health <= 0:
 		print("Dead")
+		GameManager.add_score(5)
 		queue_free()
-			
-func _on_hp_set(new_value : int):
-	hp = new_value
-	#progress bar update
+
+func _on_health_health_changed(diff: int) -> void:
+	$ProgressBar.value = Enemy_health.health
