@@ -52,7 +52,7 @@ This project uses one of godot's starter kits, then using heartbeast RPG statema
 
 ## Authors
 
-* Myself (Tyler aka Dax272)
+* Myself (Dax272)
 
 ## Version History
 
