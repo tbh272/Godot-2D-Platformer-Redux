@@ -1,0 +1,82 @@
+[gd_scene load_steps=10 format=4 uid="uid://cjanwm3sy2x37"]
+
+[ext_resource type="PackedScene" uid="uid://cyti38f0lagf2" path="res://Scenes/Prefabs/LevelFinishDoor.tscn" id="1_oqkjg"]
+[ext_resource type="PackedScene" uid="uid://bjb3dx2x4bocm" path="res://Scenes/Levels/Level_02.tscn" id="2_0ac5u"]
+[ext_resource type="PackedScene" uid="uid://w7m6tehvvy3g" path="res://Scenes/Prefabs/player.tscn" id="2_pay8t"]
+[ext_resource type="Script" path="res://Scripts/GameManager.gd" id="4_vgfkr"]
+[ext_resource type="Texture2D" uid="uid://jaegp53ccc7w" path="res://Assets/Spritesheet/platformPack_tilesheet.png" id="5_wqbaa"]
+[ext_resource type="PackedScene" uid="uid://bkeql32ohl058" path="res://UI/PlayerUI.tscn" id="6_5bsob"]
+[ext_resource type="FontFile" uid="uid://qgc4vi5osk7v" path="res://Assets/Fonts/Star Choco.ttf" id="7_ssyuv"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_obbna"]
+texture = ExtResource("5_wqbaa")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, 32, 32, 32, 32, -32, -32, -32)
+0:2/0 = 0
+0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 16, -32, 16)
+2:4/0 = 0
+2:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 0, -32, 0)
+4:0/0 = 0
+4:1/0 = 0
+5:0/0 = 0
+5:1/0 = 0
+2:5/0 = 0
+3:0/0 = 0
+3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+0:5/0 = 0
+4:5/0 = 0
+0:4/0 = 0
+0:4/0/z_index = 1
+1:4/0 = 0
+2:6/0 = 0
+2:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+
+[sub_resource type="TileSet" id="TileSet_v6t7f"]
+tile_size = Vector2i(64, 64)
+physics_layer_0/collision_layer = 1
+sources/0 = SubResource("TileSetAtlasSource_obbna")
+
+[node name="Level_01" type="Node2D"]
+
+[node name="LevelBasicEnemy" parent="." instance=ExtResource("1_oqkjg")]
+position = Vector2(863, 400)
+next_scene = ExtResource("2_0ac5u")
+
+[node name="Player" parent="." instance=ExtResource("2_pay8t")]
+z_index = 1
+position = Vector2(150, 318)
+
+[node name="Ground" type="TileMapLayer" parent="." groups=["Ground"]]
+use_parent_material = true
+tile_map_data = PackedByteArray("AAAAAAcAAAAAAAAAAAABAAcAAAAAAAAAAAACAAcAAAAAAAAAAAADAAcAAAAAAAAAAAAEAAcAAAAAAAAAAAAIAAcAAAAAAAAAAAAJAAcAAAAAAAAAAAAAAAgAAAADAAAAAAAAAAkAAAADAAAAAAABAAgAAAADAAAAAAABAAkAAAADAAAAAAACAAgAAAADAAAAAAACAAkAAAADAAAAAAADAAgAAAADAAAAAAADAAkAAAADAAAAAAAJAAgAAAADAAAAAAAJAAkAAAADAAAAAAAMAAcAAAAAAAAAAAANAAcAAAAAAAAAAAAOAAcAAAAAAAAAAAARAAcAAAAAAAAAAAASAAcAAAAAAAAAAAATAAcAAAAAAAAAAAAUAAcAAAAAAAAAAAAVAAcAAAAAAAAAAAARAAgAAAADAAAAAAASAAgAAAADAAAAAAASAAkAAAADAAAAAAATAAkAAAADAAAAAAAUAAkAAAADAAAAAAAVAAkAAAADAAAAAAAVAAgAAAADAAAAAAAUAAgAAAADAAAAAAATAAgAAAADAAAAAAARAAkAAAADAAAAAAAKAAkAAAADAAAAAAALAAkAAAADAAAAAAAMAAkAAAADAAAAAAANAAkAAAADAAAAAAAOAAkAAAADAAAAAAAPAAkAAAADAAAAAAAQAAkAAAADAAAAAAAAAAoAAAADAAAAAAABAAoAAAADAAAAAAACAAoAAAADAAAAAAADAAoAAAADAAAAAAAEAAoAAAADAAAAAAAFAAoAAAADAAAAAAAGAAoAAAADAAAAAAAHAAoAAAADAAAAAAAIAAoAAAADAAAAAAAJAAoAAAADAAAAAAAKAAoAAAADAAAAAAALAAoAAAADAAAAAAAMAAoAAAADAAAAAAANAAoAAAADAAAAAAAOAAoAAAADAAAAAAAPAAoAAAADAAAAAAAQAAoAAAADAAAAAAARAAoAAAADAAAAAAASAAoAAAADAAAAAAATAAoAAAADAAAAAAAUAAoAAAADAAAAAAAVAAoAAAADAAAAAAAWAAcAAAAAAAAAAAAXAAcAAAAAAAAAAAAYAAcAAAAAAAAAAAAZAAcAAAAAAAAAAAAaAAcAAAAAAAAAAAAbAAcAAAAAAAAAAAAcAAcAAAAAAAAAAAAdAAcAAAAAAAAAAAAeAAcAAAAAAAAAAAAWAAgAAAADAAAAAAAWAAkAAAADAAAAAAAWAAoAAAADAAAAAAAXAAoAAAADAAAAAAAXAAkAAAADAAAAAAAXAAgAAAADAAAAAAAYAAoAAAADAAAAAAAYAAkAAAADAAAAAAAYAAgAAAADAAAAAAAZAAgAAAADAAAAAAAZAAkAAAADAAAAAAAZAAoAAAADAAAAAAAaAAkAAAADAAAAAAAaAAgAAAADAAAAAAAaAAoAAAADAAAAAAAbAAgAAAADAAAAAAAbAAkAAAADAAAAAAAcAAoAAAADAAAAAAAcAAkAAAADAAAAAAAcAAgAAAADAAAAAAAdAAkAAAADAAAAAAAdAAgAAAADAAAAAAAeAAkAAAADAAAAAAAfAAkAAAADAAAAAAAfAAgAAAADAAAAAAAeAAoAAAADAAAAAAAdAAoAAAADAAAAAAAbAAoAAAADAAAAAAAeAAgAAAADAAAAAAAfAAoAAAADAAAAAAAfAAcAAAAAAAAAAAAfAAYAAAACAAYAAAAfAAUAAAACAAYAAAAfAAQAAAACAAYAAAAfAAMAAAACAAYAAAAfAAIAAAACAAYAAAAfAAEAAAACAAYAAAAfAAAAAAACAAYAAAAKAAcAAAAAAAAAAAALAAcAAAAAAAAAAAAPAAcAAAAAAAAAAAAQAAcAAAAAAAAAAAAKAAgAAAADAAAAAAALAAgAAAADAAAAAAAMAAgAAAADAAAAAAANAAgAAAADAAAAAAAOAAgAAAADAAAAAAAPAAgAAAADAAAAAAAQAAgAAAADAAAAAAAFAAcAAAAAAAAAAAAGAAcAAAAAAAAAAAAHAAcAAAAAAAAAAAD//wcAAAAAAAAAAAD+/wcAAAAAAAAAAAD9/wcAAAAAAAAAAAD8/wcAAAAAAAAAAAD7/wcAAAAAAAAAAAD6/wcAAAAAAAAAAAD6/wgAAAADAAAAAAD6/wkAAAADAAAAAAD6/woAAAADAAAAAAD7/wgAAAADAAAAAAD7/wkAAAADAAAAAAD7/woAAAADAAAAAAD8/wgAAAADAAAAAAD8/wkAAAADAAAAAAD8/woAAAADAAAAAAD9/wgAAAADAAAAAAD9/wkAAAADAAAAAAD9/woAAAADAAAAAAD+/wgAAAADAAAAAAD+/wkAAAADAAAAAAD+/woAAAADAAAAAAD//wgAAAADAAAAAAD//wkAAAADAAAAAAD//woAAAADAAAAAAAEAAgAAAADAAAAAAAEAAkAAAADAAAAAAAFAAgAAAADAAAAAAAFAAkAAAADAAAAAAAGAAgAAAADAAAAAAAGAAkAAAADAAAAAAAHAAgAAAADAAAAAAAHAAkAAAADAAAAAAAIAAgAAAADAAAAAAAIAAkAAAADAAAAAAD6/wYAAAACAAYAAAD6/wUAAAACAAYAAAD6/wQAAAACAAYAAAD6/wMAAAACAAYAAAD6/wIAAAACAAYAAAD6/wEAAAACAAYAAAD6/wAAAAACAAYAAAA=")
+tile_set = SubResource("TileSet_v6t7f")
+
+[node name="SpawnPoint" type="Marker2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(164, 415)
+
+[node name="GameManager" type="Node2D" parent="."]
+script = ExtResource("4_vgfkr")
+
+[node name="UserInterface" parent="." instance=ExtResource("6_5bsob")]
+
+[node name="TutorialText" type="Node2D" parent="."]
+
+[node name="Credits" type="Label" parent="TutorialText"]
+offset_left = -55.0
+offset_top = 182.0
+offset_right = 542.0
+offset_bottom = 431.0
+theme_override_colors/font_color = Color(0.910156, 0.730469, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("7_ssyuv")
+theme_override_font_sizes/font_size = 32
+text = "WASD - Move
+Space - Jump
+Left Shift - Dash
+J - Attack
+More to find while playing and messing
+with code"
+horizontal_alignment = 1

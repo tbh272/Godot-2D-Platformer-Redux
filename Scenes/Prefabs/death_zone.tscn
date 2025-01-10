@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://cdapo4su8xalb"]
+
+[ext_resource type="Script" path="res://Scenes/Prefabs/death_zone.gd" id="1_nrgd6"]
+
+[node name="DeathZone" type="Area2D"]
+collision_mask = 3
+script = ExtResource("1_nrgd6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

@@ -1,0 +1,53 @@
+[gd_scene load_steps=6 format=3 uid="uid://cyti38f0lagf2"]
+
+[ext_resource type="Script" path="res://Scripts/Levels/LevelFinishDoor.gd" id="1_bto8y"]
+[ext_resource type="Texture2D" uid="uid://clnok6h0axegl" path="res://Assets/platformPack_tile048.png" id="2_v64bf"]
+[ext_resource type="FontFile" uid="uid://cte272ww60t3x" path="res://Assets/Fonts/monogram.ttf" id="3_xb0oy"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_34g1n"]
+size = Vector2(66, 80)
+
+[sub_resource type="Theme" id="Theme_0puvm"]
+default_font = ExtResource("3_xb0oy")
+
+[node name="LevelFinishDoor" type="Area2D"]
+collision_mask = 3
+script = ExtResource("1_bto8y")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("2_v64bf")
+region_rect = Rect2(320, 320, 64, 64)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 8)
+shape = SubResource("RectangleShape2D_34g1n")
+
+[node name="Panel" type="Panel" parent="."]
+custom_minimum_size = Vector2(196, 28)
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -98.0
+offset_top = -101.0
+offset_right = 98.0
+offset_bottom = -73.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="InteractLabel" type="Label" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_0puvm")
+text = "Press [ENTER] to Interact"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
